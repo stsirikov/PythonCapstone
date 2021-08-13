@@ -32,18 +32,18 @@ class TestAnalytics(ut.TestCase):
             lambda x: datetime.strptime(x, "%b %d %Y"),
             (f"Jan {i} 1980" for i in range(1, 7)),
         )
-        articles = pd.DataFrame.from_dict({"date": dates, "id": range(1, 7)})
+        articles = pd.DataFrame.from_dict({"date": dates, "title": map(lambda x: str(x), range(1, 7))})
         res = top_articles(articles)
-        self.assertTrue(res["id"].size == 5)
-        self.assertTrue(res["id"].apply(lambda x: x != 1).all())
+        self.assertTrue(res["title"].size == 5)
+        self.assertTrue(res["title"].apply(lambda x: x != "1").all())
 
     def test_analyse_authors(self):
-        authors = pd.DataFrame.from_dict({"id": range(1, 7)})
+        authors = pd.DataFrame.from_dict({"id": range(1, 7), "name": map(lambda x: str(x), range(1, 7))})
         authorship = pd.DataFrame.from_dict(
             {"author_id": [1] + (list(range(2, 7)) * 2), "article_id": range(1, 12)}
         )
         res = top_authors(authorship, authors)
-        self.assertTrue(res["article_count"].size == 5)  # wtf?
+        self.assertTrue(res["article_count"].size == 5)
         self.assertTrue(res["article_count"].apply(lambda x: x == 2).all())
 
     def test_plot(self):

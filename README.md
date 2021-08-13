@@ -18,3 +18,7 @@ or the main script:
 ```
 python3 report.py [<output name for plot>]
 ```
+
+
+## Tests
+![Alt text](./tests_passed.png) 

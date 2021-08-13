@@ -16,6 +16,7 @@ class BlogSpider(Spider):
         super(BlogSpider, self).__init__(*args, **kwargs)
 
     def parse(self, response):
+        """Parse main page for links to articles by domain."""
         for domain in response.xpath(
             '//section[contains(@class, "domainblock")]/div/h2/a/@href'
         ).getall():
@@ -23,6 +24,7 @@ class BlogSpider(Spider):
             yield Request(domain_page, callback=self.domain_parse)
 
     def domain_parse(self, response):
+        """Parse all articles from a single domain."""
         for article in response.xpath(
             '//a[contains(@class, "card cardtocheck")]/@href'
         ).getall():
@@ -30,6 +32,7 @@ class BlogSpider(Spider):
             yield Request(article_page, callback=self.article_parse)
 
     def article_parse(self, response):
+        """Parse article page."""
         container = "section[id=hero] div[id=wrap]"
         date = datetime.strptime(
             response.css(f"{container} div[class=sdate]::text")[0]
@@ -62,6 +65,7 @@ class BlogSpider(Spider):
         yield BlogItem(article=title, authors=authors_names, tags=tags_names)
 
     def author_parse(self, response):
+        """Parse author page."""
         card = '//div[@class="modalbg"]/div[@class="authorcard popup"]'
         name = response.xpath(f'{card}//div[@class="titlewrp"]/h3/text()')[0].get()
         job_container = response.xpath(

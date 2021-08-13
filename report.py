@@ -1,7 +1,6 @@
 from sqlalchemy.orm.session import sessionmaker
 from sqlalchemy.sql.functions import max
 from subprocess import run
-from sys import argv
 from pandas import read_sql_table
 
 from analytics import top_articles, top_authors, top_tags, tags_plot
@@ -9,6 +8,7 @@ from blog.blog.database import engine, Article
 
 
 def main():
+    """Entry point for the program, crawls data and builds a report."""
     Session = sessionmaker(bind=engine)
     s = Session()
     last_date = s.query(max(Article.date)).first()[0]

@@ -1,7 +1,7 @@
 # PythonCapstone
 Python from Scratch Capstone Project (parser for GridDynamics blog and a report)
 
-##
+## Requirements
 Requirements are python3 and sqlite3, python libraries pandas and sqlalchemy.
 
 ## Usage
@@ -16,7 +16,7 @@ python3 tests.py
 ```
 or the main script:
 ```
-python3 report.py [<output name for plot>]
+python3 report.py
 ```
 
 
